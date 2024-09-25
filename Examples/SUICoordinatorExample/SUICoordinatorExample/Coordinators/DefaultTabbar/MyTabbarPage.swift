@@ -25,10 +25,17 @@
 import SUICoordinator
 import SwiftUI
 
-
 @available(iOS 16.0, *)
 public enum MyTabbarPage: TabbarPage, CaseIterable {
-    
+    public func coordinator(resolver: Int) -> (any CoordinatorType) {
+        switch self {
+            case .first:
+                return HomeCoordinator()
+            case .second:
+                return TabbarFlowCoordinator()
+        }
+    }
+
     case first
     case second
     
@@ -56,15 +63,6 @@ public enum MyTabbarPage: TabbarPage, CaseIterable {
         switch self {
             case .first: return 0
             case .second: return 1
-        }
-    }
-    
-    public func coordinator() -> (any CoordinatorType) {
-        switch self {
-            case .first:
-                return HomeCoordinator()
-            case .second:
-                return TabbarFlowCoordinator()
         }
     }
 }

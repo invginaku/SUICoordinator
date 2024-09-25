@@ -24,6 +24,7 @@
 
 import Foundation
 import Combine
+import Swinject
 
 /// An open class representing a coordinator for managing a tabbar-based navigation.
 ///
@@ -40,7 +41,9 @@ open class TabbarCoordinator<Page>: Coordinator<DefaultRoute>, TabbarCoordinator
     
     /// The published current page associated with the tabbar coordinator.
     @Published public var currentPage: Page
-    
+
+    public var resolver: Resolver
+
     // --------------------------------------------------------------------
     // MARK: Properties
     // --------------------------------------------------------------------
@@ -65,10 +68,11 @@ open class TabbarCoordinator<Page>: Coordinator<DefaultRoute>, TabbarCoordinator
     ///   - currentPage: The initial current page for the tabbar coordinator.
     ///   - presentationStyle: The presentation style for transitioning between pages.
     ///   - customView: A custom view associated with the tabbar coordinator.
-    public init( pages: [Page], currentPage: Page, presentationStyle: TransitionPresentationStyle = .sheet, customView: Page.View? = nil) {
+    public init(pages: [Page], currentPage: Page, presentationStyle: TransitionPresentationStyle = .sheet, customView: Page.View? = nil, resolver: Resolver) {
         self.presentationStyle = presentationStyle
         self.currentPage = currentPage
         self.customView = customView
+        self.resolver = resolver
         super.init()
         
         Task { [weak self] in
@@ -128,7 +132,7 @@ open class TabbarCoordinator<Page>: Coordinator<DefaultRoute>, TabbarCoordinator
     ///   - value: The array of pages to set up.
     private func setupPages(_ value: [Page]) {
         value.forEach({
-            let item = $0.coordinator()
+            let item = $0.coordinator(resolver: resolver)
             startChildCoordinator(item)
             item.tagId = "\($0.position)"
         })

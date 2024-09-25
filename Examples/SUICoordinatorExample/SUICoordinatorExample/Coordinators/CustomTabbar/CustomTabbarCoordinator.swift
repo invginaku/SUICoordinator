@@ -51,7 +51,8 @@ public class CustomTabbarCoordinator: TabbarCoordinator<MyTabbarPage> {
         super.init(
             pages: PAGE.allCases,
             currentPage: currentPage,
-            customView: CustomTabbarView(viewModel: viewModel)
+            customView: CustomTabbarView(viewModel: viewModel),
+            resolver: 1
         )
         
         setupObservers()

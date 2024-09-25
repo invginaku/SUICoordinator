@@ -23,6 +23,7 @@
 //
 
 import Foundation
+import Swinject
 
 /// A protocol representing a type for managing and providing a coordinator for tabbar navigation.
 @available(iOS 16.0, *)
@@ -35,5 +36,5 @@ public protocol TabbarNavigationRouter {
     /// Retrieves a coordinator associated with tabbar navigation.
     ///
     /// - Returns: The coordinator associated with tabbar navigation.
-    func coordinator() -> (any CoordinatorType)
+    func coordinator(resolver: Resolver) -> (any CoordinatorType)
 }
