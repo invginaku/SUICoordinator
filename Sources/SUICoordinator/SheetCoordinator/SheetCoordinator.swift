@@ -88,7 +88,11 @@ final public class SheetCoordinator<T>: ObservableObject {
         }
         animated = sheet.animated
         lastPresentationStyle = sheet.presentationStyle
-        items.append(sheet)
+        var transaction = Transaction()
+        transaction.disablesAnimations = true
+        withTransaction(transaction) {
+            items.append(sheet)
+        }
     }
     
     /// Removes the last presented sheet.
