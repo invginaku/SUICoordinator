@@ -52,8 +52,8 @@ public extension CoordinatorType {
             id: "\(coordinator.uuid) - \(presentationStyle.id)",
             view: coordinator.view,
             animated: animated,
-            presentationStyle: (presentationStyle != .push) ? presentationStyle :  .sheet)
-        
+            presentationStyle: presentationStyle)
+
         await router.presentSheet(item: item)
     }
     
